@@ -7,8 +7,6 @@ function checkAuth(){
 function registerSubmit(event){
     event.preventDefault();
     const data = getFormData(event.target);
-    console.log(data);
-    
 
     registration(data)
 }

@@ -27,7 +27,7 @@ function getReviewWLinkTemplate(review, business_user, reviewer) {
     return `
                         <div class="card d_flex_cs_gm f_d_c">
                             <div class="d_flex_cs_gm f_d_r_resp_c">
-                                <img class="profile_img_small" src="${getPersonImgPath(reviewer.user.file)}" alt="Benutzeravatar">
+                                <img class="profile_img_small c_pointer" onclick="redirectToCustomerProfile(${reviewer.user.pk})" src="${getPersonImgPath(reviewer.user.file)}" alt="Benutzeravatar">
                                 <div>
                                     <h3 class="link c_black w_full" onclick="redirectToCustomerProfile(${reviewer.user.pk})">${reviewer.user.first_name} ${reviewer.user.last_name}</h3>
                                     <div class="review_stars">
@@ -44,8 +44,11 @@ function getReviewWLinkTemplate(review, business_user, reviewer) {
 
 
 function getReviewWLinkEditableTemplateList(reviews) {
-    if (!Array.isArray(reviews) || reviews.length === 0) {
-        return '<p>Fehler beim Laden der bearbeitbaren Bewertungen</p>';
+    if (!Array.isArray(reviews)) {
+        return '<p>Fehler beim Laden der Bewertungen</p>';
+    }
+    if (reviews.length === 0) {
+        return '<p>Es existieren noch keine Bewertungen</p>';
     }
     let reviewListHTML = "";
 
@@ -93,16 +96,17 @@ function getReviewEditableTemplate(review, business_user, reviewer) {
 }
 
 
-function getReviewDialogformTemplate(review) {
+function getReviewDialogformTemplate(review, edit=false) {
     if (!review || typeof review !== 'object' ) {
         return `
             <div class="card d_flex_cs_gm f_d_c">
                 Es ist ein Fehler aufgetreten
             </div>`;
     }
+
     return `
         <form onclick="stopProp(event)" onsubmit="onReviewSubmit(event, ${review.id})" class="m_auto small_form d_flex_cs_gm f_d_c pos_rel">
-                    <h2 class="font_prime_color">Bewertung hinzufügen</h2>
+                    <h2 class="font_prime_color">Bewertung ändern</h2>
                     <button type="button" onclick="closeDialog('rating_dialog')"
                             class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn_m">
                             <img src="./assets/icons/close_black.svg" alt="">
@@ -120,9 +124,25 @@ function getReviewDialogformTemplate(review) {
                     </div>
                     <div class="d_flex_cs_gm f_d_r_resp_c">
                         <button type="submit" class="std_btn btn_prime pad_s w_full">Speichern</button>
-                        <button onclick="deleteReview(${review.id})" type="button"
+                        <button onclick="openReviewDeleteDialog(${review.id})" type="button"
                             class="std_btn btn_delete pad_s w_full">Löschen</button>
                     </div>
+        </form>
+    `
+}
+
+
+function getDeleteOrNotTemplate(review_id){
+    return `
+        <form onclick="stopProp(event)" class="m_auto small_form d_flex_cs_gm f_d_c pos_rel">
+                    <div class="d_flex_cc_gxl f_d_c w_full">
+            <img class="profile_img" src="./assets/icons/error_circle_red.svg" alt="" srcset="">
+            <h2 class="text_a_c">Bewertung unwideruflich löschen?</h2>
+            <div class="d_flex_cc_gm f_d_r_resp_c w_full">
+                <button onclick="deleteReview(${review_id})" class="std_btn btn_delete pad_s">löschen</button>
+                <button onclick="closeDialog('order_dialog')" class="std_btn btn_secondary pad_s">abbrechen</button>
+            </div>
+        </div>
         </form>
     `
 }

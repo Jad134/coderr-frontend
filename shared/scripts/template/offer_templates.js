@@ -13,14 +13,20 @@ function getOfferTemplateList(offers){
 }
 
 function getEmptyOfferListTemplate(){
-    return '<p>Wir konnten keine Angebote finden</p>'
+    return `
+        <div class=" d_flex_cc_gl f_d_c w_full">
+            <img class="nothing_found_img" src="./assets/img/nothing_found.png" alt="Nothing found image">
+            <h3 class="font_prime_color">Wir konnten keine Dienstleistungen finden, die deiner Suche entsprechen</h3>
+        </div>
+    `
 }
 
 function getOfferPagination(currentMax, currentPage){
-
     if (typeof currentMax !== 'number' || typeof currentPage !== 'number' || currentMax < 0 || currentPage < 1) {
-        debugger
         return '<p>Fehler bei der Paginierung</p>';
+    }
+    if(currentMax == 0){
+        return ``;
     }
     return `
     <div class="d_flex_cc_gm f_d_r_resp_c w_full">
@@ -136,7 +142,7 @@ function getOfferDialogTemplate() {
     let deleteBtn = currentOfferId ? '<button onclick="deleteOffer()" type="button" class="std_btn btn_delete pad_s ">Angebot löschen</button>' : "";
     return `
     <div onclick="stopProp(event)" class="m_auto dialog_content large_form d_flex_cc_gl f_d_c m_auto pos_rel">
-                    <h2 class="font_prime_color">${title}</h2> 
+                    <h2 class="font_prime_color p_top_s">${title}</h2> 
                     <button onclick="closeEditDialog()"
                         class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn_m">
                         <img src="./assets/icons/close_black.svg" alt="">
@@ -196,9 +202,6 @@ function getOfferDetailDialogTemplateList() {
 }
 
 function getOfferDetailDialogTemplate(detail) {
-    if (!detail || typeof detail !== 'object' || !detail.offer_type || !detail.title || !detail.price || !detail.delivery_time_in_days) {
-        return '<p>Fehler beim Laden der Angebotsdetails</p>';
-    }
 
     let checked = detail.revisions == -1 ? "checked" : "";
     let revisionsCount = detail.revisions <= 0 ? 0 : detail.revisions;

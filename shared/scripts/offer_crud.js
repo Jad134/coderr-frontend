@@ -72,6 +72,7 @@ function openOfferDialog(id = null) {
     currentFile = null;
     if (!id) {
         createEmptyOffer();
+
     } else {
         let singleOffer = currentOffers.find(item => item.id === id)
         currentOfferId = singleOffer.id;

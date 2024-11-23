@@ -4,7 +4,7 @@ function getsingleOfferHeaderTemplate(){
     }
     return `
                     <div class="d_flex_cc_gl f_d_r_resp_c">
-                        <img class="profile_img_l" src="${getPersonImgPath(currentSingleOfferUser.file)}" alt="Profilbild">
+                        <img class="profile_img_l c_pointer" onclick="redirectToCustomerProfile(${currentSingleOfferUser.user})" src="${getPersonImgPath(currentSingleOfferUser.file)}" alt="Profilbild">
                         <div class="d_flex_cs_gm f_d_c ">
                             <div class="d_flex_cs_gm f_d_r_resp_c">
                                 <h3 class="link c_black" onclick="redirectToCustomerProfile(${currentSingleOfferUser.user})">${currentSingleOfferUser.first_name} ${currentSingleOfferUser.last_name}</h3>
@@ -34,6 +34,8 @@ function getSingleOfferDetailTemplate(){
     if (!currentOpenedDetail) {
         return `<div>Es ist ein Fehler aufgetreten</div>`;
     }
+
+    
     return `
         <h3 class="font_prime_color">${currentOpenedDetail.price} €</h3>
                         <h3>${currentOpenedDetail.title}</h3>
@@ -49,9 +51,21 @@ function getSingleOfferDetailTemplate(){
                         <ul class="feature_list">
                             ${getFeatureListTemplate()}
                         </ul>
-
-                        <button onclick="openDialog('order_dialog')" class="std_btn btn_prime pad_s">Bestellen</button>
+    	                ${getOrderBtnTemplate()}
     `
+}
+
+function getOrderBtnTemplate(){
+    if(currentUser.type == "business"){
+        return `
+                        <div >
+                            <button onclick="openDialog('offer_orderbtn_error')" class="std_btn std_btn_disabled btn_prime pad_s">Bestellen</button>
+                            <p id="offer_orderbtn_error" class="font_error_color d_none">dies ist nur als Kunde möglich</p>
+                        </div>
+        `
+    } else {
+        return `<button onclick="openDialog('order_dialog')" class="std_btn btn_prime pad_s">Bestellen</button>`
+    }
 }
 
 function getFeatureListTemplate(){

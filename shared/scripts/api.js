@@ -67,7 +67,6 @@ async function getData(endpoint) {
             headers: createHeaders(),
         });
         const responseData = await response.json();
-
         return {
             ok: response.ok,
             status: response.status,
@@ -194,11 +193,10 @@ async function deleteData(endpoint) {
             headers: createHeaders(),
         });
 
-        const responseData = await response.json();
         return {
             ok: response.ok,
             status: response.status,
-            data: responseData
+            data: {}
         };
 
     } catch (error) {

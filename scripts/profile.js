@@ -46,6 +46,7 @@ async function updateOfferListFilter() {
 }
 
 async function getFullProfileData() {
+
     if (currentUser.type == "business") {
         await setReviewsForBusinessUser(currentUser.user)
     } else if (currentUser.type == "customer") {
@@ -111,6 +112,7 @@ async function updateBusinessProfile(formData) {
         currentUser = userResp.data;
         closeDialog('business_dialog');
         document.getElementById("business_profile").innerHTML = getBusinessProfileTemplate(currentUser);
+        setHeader();
     } else {
         extractErrorMessages(resp.data)
         showToastMessage(true, extractErrorMessages(resp.data))
