@@ -9,7 +9,6 @@ let allOffersLength=null;
 async function setOffers(filterParams = {}) {
     let offerResp = await getData(OFFER_URL + getOfferFilter(filterParams));
     if (offerResp.ok) {
-        console.log("Filtered Offers:", offerResp.data.results); // Debugging
         allOffersLength = offerResp.data.count
         currentOffers = offerResp.data.results;
         await setOfferDetails();
