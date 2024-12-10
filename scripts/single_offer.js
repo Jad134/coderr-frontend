@@ -108,6 +108,8 @@ async function onSubmitReviewSingleOffer() {
 async function singleOfferOrderCreate(){
     let orderResp = await createOrder(currentOpenedDetail.id);
     if(orderResp.ok){
+        console.log(orderResp);
+        
         document.getElementById('single_offe_order_dialog').innerHTML = getSendOrderDialogContentTemplate();
     } else {
 
