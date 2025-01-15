@@ -9,8 +9,8 @@ const GUEST_LOGINS = {
     }
 }
 
-const API_BASE_URL = 'http://35.222.206.0/api/';
-const STATIC_BASE_URL = 'http://35.222.206.0/';
+const API_BASE_URL = 'https://coderr.jad-portfolio-api.de/api/';
+const STATIC_BASE_URL = 'https://coderr.jad-portfolio-api.de/';
 
 
 const LOGIN_URL = 'login/';

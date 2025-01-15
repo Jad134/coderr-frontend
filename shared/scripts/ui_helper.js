@@ -81,21 +81,19 @@ function formatDate(dateString) {
 }
 
 function getPersonImgPath(filepath) {
-
     if (filepath) {
-        return STATIC_BASE_URL + filepath
+        return STATIC_BASE_URL.replace(/\/+$/, '') + '/' + filepath.replace(/^\/+/, '');
     } else {
         return "./assets/icons/profile_pic.svg"
     }
 }
 
 function getOfferImgPath(filepath) {
-
     if (filepath) {
         if (filepath.startsWith('http')) {
             return filepath
         } else {
-            return STATIC_BASE_URL + filepath
+            return STATIC_BASE_URL.replace(/\/+$/, '') + '/' + filepath.replace(/^\/+/, '');
         }
     } else {
         return "./assets/icons/picture_icon.svg"
