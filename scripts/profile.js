@@ -81,7 +81,6 @@ async function changeOrderStatus(status, orderId) {
     let singleOrderIndex = currentOrders.findIndex(item => item.id === orderId)
     if (singleOrderIndex >=0 && currentOrders[singleOrderIndex].status != status) {
         let resp = await updateOrder(orderId, status);
-        console.log(resp);
         if (resp.ok) {
             currentOrders[singleOrderIndex].status = status;
             document.getElementById("business_order_list").innerHTML = getBusinessOrderTemplateList();
@@ -132,7 +131,7 @@ function abboardCustomerEdit() {
 async function customerEditOnsubmit(event) {
     event.preventDefault();
     const data = getFormData(event.target);
-    console.log(data);
+    
 
     let formData = jsonToFormData(data);
 
@@ -143,7 +142,7 @@ async function updateCustomerProfile(formData) {
     if (currentFile) {
         formData.append('file', currentFile);
     }
-    console.log(currentUser.user);
+    
 
     let resp = await patchData(PROFILE_URL + currentUser.user + "/", formData)
 

@@ -86,7 +86,6 @@ async function onSubmitReviewBusinessProfile() {
             description: textInputRef.value,
             business_user: currentBusinessUser.user
         };
-        console.log(data);
 
         let resp = await createReview(data)
         if (resp.ok) {
